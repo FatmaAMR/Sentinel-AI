@@ -37,7 +37,7 @@ In modern manufacturing, unexpected downtime costs industries millions. **Sentin
 ### 2. Installation
 1.  **Clone the Repo**:
     ```bash
-    git clone [https://github.com/your-username/sentinel-ai.git](https://github.com/FatmaAMR/Sentinel-AI.git)
+    git clone https://github.com/FatmaAMR/Sentinel-AI.git
     ```
 2.  **Backend Setup**:
     * Navigate to `/backend`, create a virtual environment, and install `requirements.txt`.
