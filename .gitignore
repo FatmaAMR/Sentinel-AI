@@ -1,0 +1,50 @@
+# --- Python / FastAPI ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+.env.*
+!.env.example
+
+# --- Databases ---
+*.db
+*.sqlite3
+# Excluding local Vector DB storage
+backend/chromadb/
+
+# --- Environment & Secrets (Crucial for Sentinel-AI) ---
+# Prevent Groq/HuggingFace keys from being pushed
+.env
+backend/.env
+frontend/.env
+
+# --- Frontend (React/Vite/Node) ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- IDEs / Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# --- Data & Logs ---
+# Keep the folder structure but ignore large data files
+backend/data/*
+!backend/data/README.md
+!backend/data/.gitkeep
+backend/tests/logs/
+
+# --- OS Specific ---
+Thumbs.db
+db.json
