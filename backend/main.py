@@ -1,25 +1,10 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from datetime import datetime
+from api.core.database import engine, Base
+from api.endpoints import chat, knowledge
+from api.models import models
+Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Sentinel AI API", version="1.0.0")
+app = FastAPI(title="Sentinel AI")
 
-# Simple Schema for a Log Entry
-class MaintenanceLog(BaseModel):
-    asset_id: str
-    vibration_level: float
-    note: str
-
-@app.get("/")
-def read_root():
-    return {"status": "Sentinel Online", "timestamp": datetime.now()}
-
-@app.post("/diagnose")
-async def initial_test(log: MaintenanceLog):
-    # This is where the RAG + LLM logic will go later
-    return {
-        "asset_id": log.asset_id,
-        "received_vibration": log.vibration_level,
-        "initial_diagnosis": "System receiving data. AI Engine Pending Integration.",
-        "status": "Success"
-    }
+app.include_router(chat.router, prefix="/chat")
+app.include_router(knowledge.router, prefix="/knowledge")
