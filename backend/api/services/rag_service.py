@@ -1,7 +1,3 @@
-'''
-Handles PDF loading, splitting, and VectorDB similarity search.
-
-'''
 import os
 import json
 import uuid
