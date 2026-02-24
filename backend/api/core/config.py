@@ -1,20 +1,40 @@
-"""
-CORE In general for System Configuration 
-It manages Environment Variables (.env), API keys, and global Project Constants.
+import os
+from pathlib import Path
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from functools import lru_cache
+from typing import List
 
-
-Team Note: Use Pydantic Settings here to ensure the app fails fast if the HF_TOKEN is missing.
-
-"""
-from pydantic_settings import BaseSettings
+ENV_FILE_PATH = Path("/mnt/d/AI Career/GP/Sentinel/backend/.env")
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "Sentinel AI"
-    API_V1_STR: str = "/api/v1"
-    HF_TOKEN: str
-    DATABASE_URL: str = "sqlite:///./sentinel.db"
+    APP_NAME: str = "Sentinel"
+    APP_VESRION: str = "0.1"
+    
+    FILE_ALLOWED_TYPES: List[str] = ["pdf", "docx", "txt", "rtf"]
+    FILE_MAX_SIZE: int = 10
+    
+    GROQ_API_KEY: str  
+    GROQ_MODEL_NAME: str = "llama-3.1-8b-instant"
+    
+    DATABASE_URL: str
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    
+    model_config = SettingsConfigDict(
+        env_file=str(ENV_FILE_PATH), 
+        extra="ignore"
+    )
 
-    class Config:
-        env_file = ".env"
+@lru_cache()
+def get_settings():
+    if not ENV_FILE_PATH.exists():
+        
+        print(f"Warning: .env file NOT FOUND at {ENV_FILE_PATH}")
+    
+    s = Settings()
+    s.DATABASE_URL = s.DATABASE_URL.strip()
+    #print(f"DEBUG: Connecting to DB -> {s.DATABASE_URL}")
+    return s
 
-settings = Settings()
+settings = get_settings()
