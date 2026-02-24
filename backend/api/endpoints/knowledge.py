@@ -1,34 +1,69 @@
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from sqlalchemy.orm import Session
+from typing import List
 from ..core.database import get_db
 from ..models.models import KnowledgeBase
+from ..schemas.knowledge import KnowledgeResponse
 import shutil
 import os
 
 router = APIRouter()
-UPLOAD_DIR = "manuals"
+UPLOAD_DIR = "data/manuals"
 
 @router.post("/upload")
 async def upload_manual(file: UploadFile = File(...), db: Session = Depends(get_db)):
-    file_path = os.path.join(UPLOAD_DIR, file.filename)
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    existing_file = db.query(KnowledgeBase).filter(KnowledgeBase.file_name == file.filename).first()
     
-    new_file = KnowledgeBase(file_name=file.filename, file_path=file_path)
-    db.add(new_file)
-    db.commit()
-    # هنا هنادي على ميثود الـ Ingestion للـ VDB لاحقاً
-    return {"message": f"File {file.filename} uploaded and metadata saved."}
+    if existing_file:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"The Resource '{file.filename}'is alraedy exist! If You want to upload another version Drop The Old one!"
+        )
 
-@router.get("/files")
-def list_files(db: Session = Depends(get_db)):
+    if not os.path.exists(UPLOAD_DIR):
+        os.makedirs(UPLOAD_DIR)
+
+    file_path = os.path.join(UPLOAD_DIR, file.filename)
+    
+    try:
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        new_file = KnowledgeBase(file_name=file.filename, file_path=file_path)
+        db.add(new_file)
+        db.commit()
+        db.refresh(new_file)
+        
+        return {"status": "success", "id": new_file.id, "filename": file.filename}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
+
+@router.get("/", response_model=List[KnowledgeResponse])
+async def get_all_manuals(db: Session = Depends(get_db)):
     return db.query(KnowledgeBase).all()
 
-@router.delete("/files/{file_id}")
-def delete_file(file_id: int, db: Session = Depends(get_db)):
-    file = db.query(KnowledgeBase).filter(KnowledgeBase.id == file_id).first()
-    if not file: raise HTTPException(status_code=404)
-    if os.path.exists(file.file_path): os.remove(file.file_path)
-    db.delete(file)
-    db.commit()
-    return {"message": "Deleted successfully"}
+@router.get("/{file_id}")
+async def get_manual(file_id: int, db: Session = Depends(get_db)):
+    manual = db.query(KnowledgeBase).filter(KnowledgeBase.id == file_id).first()
+    if not manual:
+        raise HTTPException(status_code=404, detail="Manual not found")
+    return manual
+
+
+@router.delete("/{file_id}")
+async def delete_manual(file_id: int, db: Session = Depends(get_db)):
+    manual = db.query(KnowledgeBase).filter(KnowledgeBase.id == file_id).first()
+    if not manual:
+        raise HTTPException(status_code=404, detail="Manual not found")
+    
+    try:
+        if os.path.exists(manual.file_path):
+            os.remove(manual.file_path)
+
+        db.delete(manual)
+        db.commit()
+        return {"status": "deleted", "message": f"File {manual.file_name} removed"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Delete failed: {str(e)}")

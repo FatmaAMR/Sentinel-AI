@@ -12,7 +12,7 @@ class User(Base):
 class KnowledgeBase(Base):
     __tablename__ = "knowledge_base"
     id = Column(Integer, primary_key=True, index=True)
-    file_name = Column(String)
+    file_name = Column(String, unique=True, index=True) #to avoid race condidtion
     file_path = Column(String)
     upload_date = Column(DateTime, default=datetime.utcnow)
 

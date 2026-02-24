@@ -1,50 +1,58 @@
 import os
-from pathlib import Path
 import json
 import uuid
 from datetime import datetime
-from dotenv import load_dotenv
-from langchain_groq import ChatGroq
+from pathlib import Path
 from sqlalchemy.orm import Session
 from ..core import settings
 env_path = Path(__file__).resolve().parent.parent.parent.parent / '.env'
 load_dotenv(dotenv_path=env_path)
 
+# استيراد الإعدادات من الـ Core
+from ..core import settings
 
-from langchain_ollama import OllamaEmbeddings, ChatOllama
+# LangChain Imports (Remote-friendly)
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_groq import ChatGroq
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-from ..schemas.diagnosis import DiagnosisResponse
+from ..schemas import DiagnosisResponse
 from ..models.models import ChatHistory, DiagnosisLog
-
-
-load_dotenv()
-
 
 class RAGService:
     def __init__(self):
-        self.embeddings = OllamaEmbeddings(model="llama3") 
+        self.embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
         
         self.vector_store = Chroma(
             persist_directory="./data/vectordb",
             embedding_function=self.embeddings
         )
         
-        from langchain_groq import ChatGroq
+
         self.llm = ChatGroq(
             temperature=0,
             model_name="llama-3.3-70b-versatile",
+            api_key=settings.GROQ_API_KEY,
             groq_api_key=settings.GROQ_API_KEY
         )
 
         self.template = """
         You are a Senior Maintenance Engineer (Sentinel AI Expert).
+        Use the following pieces of context and chat history to diagnose the machine fault.
+        
         CONTEXT: {context}
         HISTORY: {history}
         LOGS: {input}
-        Output ONLY valid JSON: {{"severity": "...", "fault_type": "...", "action_plan": "...", "confidence_score": 0.0}}
+        
+        Output ONLY a valid JSON object with these keys:
+        {{
+            "severity": "CRITICAL/WARNING/STABLE",
+            "fault_type": "name of the fault",
+            "action_plan": "step by step guide",
+            "confidence_score": 0.0 to 1.0
+        }}
         """
         self.prompt = ChatPromptTemplate.from_template(self.template)
 
@@ -64,9 +72,11 @@ class RAGService:
 
         try:
             data = json.loads(raw_res)
+            
+            # هـ- حفظ البيانات
             new_log = DiagnosisLog(
                 machine_logs=request.logs,
-                severity=data.get("severity", "WATCH"),
+                severity=data.get("severity", "STABLE"),
                 fault_type=data.get("fault_type", "Unknown"),
                 action_plan=data.get("action_plan", "Manual check required")
             )
@@ -86,6 +96,7 @@ class RAGService:
             )
         except Exception as e:
             db.rollback()
-            raise e
+            raise Exception(f"Failed to parse AI response: {str(e)}")
+
 
 rag_engine = RAGService()
