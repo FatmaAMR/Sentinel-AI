@@ -6,6 +6,8 @@ import Navbar from "./Components/Navbar";
 import StatusCard from "./Components/StatusCards";
 
 import AssetDiagnosis from "./pages/AssetDiagnosis";
+import VibrationStream from "./Components/vibrationStream";
+import Footer from "./Components/Footer";
 
 export default function App() {
   return (
@@ -19,8 +21,9 @@ export default function App() {
             <main className="max-w-[1440px] mx-auto px-6 py-8">
               <StatusCard />
               <div className="grid grid-cols-12 gap-8">
-                <div className="col-span-12 lg:col-span-9">
+                <div className="col-span-12 lg:col-span-9 space-y-8">
                   <AssetsCard />
+                  <VibrationStream />
                 </div>
                 <div className="col-span-12 lg:col-span-3">
                   <AlertsSidebar />
@@ -32,6 +35,7 @@ export default function App() {
 
         <Route path="/diagnosis" element={<AssetDiagnosis />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
