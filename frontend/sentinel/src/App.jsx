@@ -8,6 +8,8 @@ import StatusCard from "./Components/StatusCards";
 import AssetDiagnosis from "./pages/AssetDiagnosis";
 import KnowledgeBase from "./pages/KnowledgeBase";
 import HistoryTrends from "./pages/HistoryTrends";
+import Config from "./pages/Config";
+
 export default function App() {
   return (
     <div className="bg-light min-h-screen text-slate-900">
@@ -34,6 +36,8 @@ export default function App() {
         <Route path="/diagnosis" element={<AssetDiagnosis />} />
         <Route path="/knowledge" element={<KnowledgeBase />} />
         <Route path="/history" element={<HistoryTrends />} />
+
+        <Route path="/config" element={<Config />} />
       </Routes>
     </div>
   );
