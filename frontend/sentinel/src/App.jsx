@@ -8,6 +8,7 @@ import StatusCard from "./Components/StatusCards";
 import AssetDiagnosis from "./pages/AssetDiagnosis";
 import VibrationStream from "./Components/vibrationStream";
 import Footer from "./Components/Footer";
+import Config from "./pages/Config";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
         />
 
         <Route path="/diagnosis" element={<AssetDiagnosis />} />
+        <Route path="/config" element={<Config />} />
       </Routes>
       <Footer />
     </div>
