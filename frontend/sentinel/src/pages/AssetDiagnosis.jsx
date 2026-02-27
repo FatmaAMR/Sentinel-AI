@@ -1,14 +1,14 @@
-import AppHeader from "../Components/Diagnosis/AppHeader";
+
 import LeftRail from "../Components/Diagnosis/LeftRail";
 import AssetTopBar from "../Components/Diagnosis/AssetTopBar";
 import TelemetryPanel from "../Components/Diagnosis/TelemetryPanel";
 import DiagnosisPanel from "../Components/Diagnosis/DiagnosisPanel";
-import AppFooter from "../Components/Diagnosis/AppFooter";
+
 
 export default function AssetDiagnosis() {
   return (
-    <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
-      <AppHeader />
+    <div className="bg-light  text-slate-900 min-h-screen flex flex-col">
+      
 
       <main className="flex-1 flex overflow-hidden">
         <LeftRail />
@@ -23,7 +23,7 @@ export default function AssetDiagnosis() {
         </div>
       </main>
 
-      <AppFooter />
+  
     </div>
   );
 }
