@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+
+
 export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
@@ -10,10 +13,12 @@ export default function Navbar() {
             <span className="text-xl font-bold tracking-tight">SENTINEL</span>
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
-            <a href="#" className="text-primary border-b-2 border-primary pb-5 mt-5">Dashboard</a>
-            <a href="#" className="hover:text-primary transition-colors">Fleet Map</a>
-            <a href="#" className="hover:text-primary transition-colors">Diagnostics</a>
-            <a href="#" className="hover:text-primary transition-colors">Reports</a>
+            <Link to="/" className="text-primary border-b-2 border-primary pb-5 mt-5">Dashboard</Link>
+            <Link to="/knowledge" className="hover:text-primary transition-colors">Knowledge Base</Link>
+            <Link to="/diagnosis" className="hover:text-primary transition-colors">Diagnostics</Link>
+            <Link to="/export" className="hover:text-primary transition-colors">Reports</Link>
+            <Link to="/config" className="hover:text-primary transition-colors">System Config</Link>
+            <Link to="/history" className="hover:text-primary transition-colors">History & Trends</Link>
           </div>
         </div>
         <div className="flex items-center gap-4">
