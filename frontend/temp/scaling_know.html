@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel Knowledge Base Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#7C3AED", // Vibrant Purple from the reference
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#0F172A",
+                        accent: "#FFD200", // Yellow accent from the reference
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1.25rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        .material-symbols-rounded {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-soft-purple {
+            background-color: rgba(124, 58, 237, 0.05);
+        }
+        .dark .bg-soft-purple {
+            background-color: rgba(124, 58, 237, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+<span class="material-symbols-rounded text-white">shield_with_heart</span>
+</div>
+<span class="text-xl font-display font-extrabold tracking-tight">SENTINEL</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Fleet Health</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Diagnostics</a>
+<a class="text-sm font-semibold text-primary" href="#">Knowledge Base</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Settings</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-rounded">dark_mode</span>
+</button>
+<button class="bg-primary text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+                    Sign Out
+                </button>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-6 py-12">
+<header class="mb-12">
+<h1 class="text-4xl md:text-5xl font-display font-extrabold mb-4">
+                Predictive <span class="text-primary italic">RAG Library</span>
+</h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl">
+                Manage your technical manuals, ISO standards, and bearing data. Sentinel's local LLMs use this context for fleet-wide diagnostics.
+            </p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-8 space-y-8">
+<section class="bg-primary/5 dark:bg-primary/10 border-2 border-dashed border-primary/30 rounded-[2.5rem] p-10 text-center relative overflow-hidden">
+<div class="absolute top-0 right-0 -mr-12 -mt-12 w-48 h-48 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="w-16 h-16 bg-primary text-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-primary/30">
+<span class="material-symbols-rounded text-3xl">cloud_upload</span>
+</div>
+<h2 class="text-2xl font-display font-bold mb-2">Update Knowledge Hub</h2>
+<p class="text-slate-500 dark:text-slate-400 mb-8 max-w-sm mx-auto">
+                            Drag &amp; drop PDF manuals or ISO standards here to index them for the AI model.
+                        </p>
+<div class="flex justify-center gap-4">
+<button class="bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-8 py-3 rounded-full font-bold flex items-center gap-2 hover:opacity-90 transition-opacity">
+                                Select Files
+                                <span class="material-symbols-rounded">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-2xl font-display font-bold">Document Library</h3>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Sort by:</span>
+<select class="bg-transparent border-none text-sm font-bold text-primary focus:ring-0 cursor-pointer">
+<option>Recently Added</option>
+<option>Document Type</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+<div class="group bg-white dark:bg-slate-800 p-4 rounded-[2rem] border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all hover:-translate-y-1">
+<div class="aspect-[3/4] bg-slate-100 dark:bg-slate-900 rounded-2xl mb-4 flex items-center justify-center overflow-hidden relative">
+<span class="material-symbols-rounded text-5xl text-slate-300 dark:text-slate-700">description</span>
+<div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<button class="bg-white text-primary p-2 rounded-full shadow-lg">
+<span class="material-symbols-rounded">visibility</span>
+</button>
+</div>
+</div>
+<h4 class="font-bold text-sm truncate mb-1">ISO-9001-Quality-Mgmt</h4>
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-bold px-2 py-1 bg-primary/10 text-primary rounded-md uppercase">Standard</span>
+<span class="text-[10px] text-slate-400">12.4 MB</span>
+</div>
+</div>
+<div class="group bg-white dark:bg-slate-800 p-4 rounded-[2rem] border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all hover:-translate-y-1">
+<div class="aspect-[3/4] bg-slate-100 dark:bg-slate-900 rounded-2xl mb-4 flex items-center justify-center overflow-hidden relative">
+<span class="material-symbols-rounded text-5xl text-slate-300 dark:text-slate-700">settings_applications</span>
+<div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<button class="bg-white text-primary p-2 rounded-full shadow-lg">
+<span class="material-symbols-rounded">visibility</span>
+</button>
+</div>
+</div>
+<h4 class="font-bold text-sm truncate mb-1">Bearing-Spec-NTN-2024</h4>
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-bold px-2 py-1 bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 rounded-md uppercase">Manual</span>
+<span class="text-[10px] text-slate-400">4.1 MB</span>
+</div>
+</div>
+<div class="group bg-white dark:bg-slate-800 p-4 rounded-[2rem] border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all hover:-translate-y-1">
+<div class="aspect-[3/4] bg-slate-100 dark:bg-slate-900 rounded-2xl mb-4 flex items-center justify-center overflow-hidden relative">
+<span class="material-symbols-rounded text-5xl text-slate-300 dark:text-slate-700">analytics</span>
+<div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<button class="bg-white text-primary p-2 rounded-full shadow-lg">
+<span class="material-symbols-rounded">visibility</span>
+</button>
+</div>
+</div>
+<h4 class="font-bold text-sm truncate mb-1">Turbine-Health-Telemetry</h4>
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-bold px-2 py-1 bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-md uppercase">Report</span>
+<span class="text-[10px] text-slate-400">8.9 MB</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="lg:col-span-4">
+<section class="bg-primary text-white rounded-[2.5rem] p-8 h-full relative overflow-hidden shadow-2xl shadow-primary/20">
+<div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+<span class="material-symbols-rounded">hub</span>
+</div>
+<h3 class="text-2xl font-display font-bold">Context Explorer</h3>
+</div>
+<p class="text-white/80 text-sm mb-8">
+                            Visualizing how the RAG engine chunks and indexes technical documentation for local inference.
+                        </p>
+<div class="space-y-4 mb-8">
+<div class="bg-white/10 p-4 rounded-2xl border border-white/20">
+<div class="flex items-center justify-between mb-3">
+<span class="text-[10px] font-bold uppercase tracking-widest opacity-60">Chunk ID: #4421</span>
+<span class="text-[10px] font-bold bg-accent text-slate-900 px-2 py-0.5 rounded">High Relevance</span>
+</div>
+<div class="space-y-1.5">
+<div class="h-2 bg-white/30 rounded-full w-full"></div>
+<div class="h-2 bg-white/30 rounded-full w-[90%]"></div>
+<div class="h-2 bg-white/30 rounded-full w-[95%]"></div>
+<div class="h-2 bg-white/30 rounded-full w-[60%]"></div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-accent"></div>
+<span class="text-xs italic opacity-80">Vector: [0.892, 0.221, -0.44...]</span>
+</div>
+</div>
+<div class="bg-white/5 p-4 rounded-2xl border border-white/10">
+<div class="flex items-center justify-between mb-3">
+<span class="text-[10px] font-bold uppercase tracking-widest opacity-60">Chunk ID: #4422</span>
+</div>
+<div class="space-y-1.5">
+<div class="h-2 bg-white/20 rounded-full w-full"></div>
+<div class="h-2 bg-white/20 rounded-full w-[80%]"></div>
+</div>
+</div>
+<div class="flex justify-center -space-x-2">
+<div class="w-8 h-8 rounded-full bg-white/20 border-2 border-primary flex items-center justify-center text-[10px]">9+</div>
+<div class="w-8 h-8 rounded-full bg-white/30 border-2 border-primary"></div>
+<div class="w-8 h-8 rounded-full bg-white/40 border-2 border-primary"></div>
+</div>
+</div>
+<div class="mt-auto">
+<div class="bg-white rounded-[1.5rem] p-6 text-slate-900">
+<h4 class="font-bold mb-1">Indexing Efficiency</h4>
+<div class="flex items-center justify-between mb-4">
+<span class="text-3xl font-display font-extrabold text-primary">98.4%</span>
+<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">+2.1%</span>
+</div>
+<p class="text-[11px] text-slate-500 font-medium">
+                                    Optimized for GPT4-All and Llama-3 local instances.
+                                </p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<section class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 py-10 border-t border-slate-200 dark:border-slate-800">
+<div>
+<span class="block text-3xl font-display font-extrabold text-primary mb-1">42,000+</span>
+<span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Total Chunks</span>
+</div>
+<div>
+<span class="block text-3xl font-display font-extrabold text-primary mb-1">156</span>
+<span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Library Docs</span>
+</div>
+<div>
+<span class="block text-3xl font-display font-extrabold text-primary mb-1">2.4ms</span>
+<span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Retrieval Latency</span>
+</div>
+<div>
+<span class="block text-3xl font-display font-extrabold text-primary mb-1">0.92</span>
+<span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Avg. Similarity</span>
+</div>
+</section>
+<section class="mt-12 bg-accent rounded-[3rem] p-12 relative overflow-hidden text-slate-900">
+<div class="absolute -left-12 -bottom-12 w-64 h-64 bg-white/30 rounded-full blur-3xl"></div>
+<div class="absolute right-0 top-0 w-32 h-full bg-primary/10 flex flex-col justify-around px-4">
+<div class="w-8 h-8 rounded-full bg-primary/20"></div>
+<div class="w-12 h-12 rounded-lg bg-primary/20"></div>
+<div class="w-10 h-10 rounded-full bg-primary/20"></div>
+</div>
+<div class="relative z-10 max-w-xl">
+<h2 class="text-4xl font-display font-extrabold mb-6 leading-tight">
+                    Ready to refine your fleet diagnostics?
+                </h2>
+<button class="bg-slate-900 text-white px-10 py-4 rounded-full font-bold flex items-center gap-3 group hover:pr-12 transition-all">
+                    Initialize Indexing
+                    <span class="material-symbols-rounded group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+</button>
+</div>
+</section>
+</main>
+<footer class="bg-slate-50 dark:bg-slate-900/50 py-12 px-6 border-t border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-2 grayscale opacity-50">
+<div class="w-6 h-6 bg-slate-900 dark:bg-white rounded-md"></div>
+<span class="text-sm font-extrabold tracking-tighter">SENTINEL</span>
+</div>
+<div class="flex gap-8 text-sm font-semibold text-slate-500">
+<a class="hover:text-primary" href="#">Terms</a>
+<a class="hover:text-primary" href="#">API Docs</a>
+<a class="hover:text-primary" href="#">System Health</a>
+<a class="hover:text-primary" href="#">Security</a>
+</div>
+<p class="text-xs text-slate-400 font-medium">© 2024 Sentinel Predictive Maintenance Systems. Proprietary and Confidential.</p>
+</div>
+</footer>
+
+</body></html>
