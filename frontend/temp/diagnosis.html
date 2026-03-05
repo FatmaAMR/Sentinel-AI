@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel | Asset Intelligence &amp; Diagnosis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#8B5CF6", // Vibrant Purple from the reference
+                        secondary: "#FDBA74", // Soft Orange/Yellow highlight
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E293B",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        .material-symbols-rounded {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .terminal-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .terminal-scroll::-webkit-scrollbar-thumb {
+            background-color: #475569;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<header class="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark sticky top-0 z-50">
+<div class="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-rounded text-xl">insights</span>
+</div>
+<span class="font-extrabold text-xl tracking-tight uppercase">Sentinel</span>
+</div>
+<nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Fleet Health</a>
+<a class="text-primary border-b-2 border-primary pb-5 pt-5" href="#">Asset Diagnosis</a>
+<a class="hover:text-primary transition-colors" href="#">Technical Docs</a>
+<a class="hover:text-primary transition-colors" href="#">Maintenance Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
+<span class="material-symbols-rounded">notifications</span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<button class="bg-primary hover:opacity-90 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 transition-all">
+<span class="material-symbols-rounded text-sm">assignment</span>
+                    Create Ticket
+                </button>
+</div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<aside class="w-16 border-r border-slate-200 dark:border-slate-800 flex flex-col items-center py-6 gap-6 bg-white dark:bg-card-dark">
+<button class="p-2 rounded-xl bg-primary/10 text-primary">
+<span class="material-symbols-rounded">analytics</span>
+</button>
+<button class="p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-rounded">settings_input_component</span>
+</button>
+<button class="p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-rounded">description</span>
+</button>
+<div class="mt-auto">
+<button class="p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-rounded">settings</span>
+</button>
+</div>
+</aside>
+<div class="flex-1 flex flex-col min-w-0">
+<div class="px-8 py-4 bg-white dark:bg-card-dark border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<div>
+<h1 class="text-xl font-bold flex items-center gap-3">
+                        Asset #TRB-9402: Gas Turbine B
+                        <span class="px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-bold">CRITICAL</span>
+</h1>
+<p class="text-sm text-slate-500 dark:text-slate-400">Diagnosis session started 08:24 AM • Model: Siemens SGT-800</p>
+</div>
+<div class="flex gap-3">
+<a href='history.html'><button class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-rounded text-lg">history</span> History
+                    </button></a>
+<a href='export_report.html'>
+    <button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">
+<span class="material-symbols-rounded text-lg">ios_share</span> Export Report
+                    </button>
+                </a>
+</div>
+</div>
+<div class="flex-1 flex gap-0 p-0 overflow-hidden">
+<div class="w-2/5 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-card-dark">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-400">Live Telemetry Logs</span>
+<div class="flex gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] font-mono text-slate-400">FEED_ACTIVE: 2.4kb/s</span>
+</div>
+</div>
+<div class="flex-1 p-4 font-mono text-xs overflow-y-auto terminal-scroll space-y-2">
+<div class="text-slate-500">[08:24:10] Connecting to MQTT broker...</div>
+<div class="text-slate-500">[08:24:11] Subscribed to /assets/TRB-9402/sensors/#</div>
+<div class="text-green-500">[08:24:12] DATA_RECEIVED: RPM=3600, TEMP=842C, VIB=12.4mm/s</div>
+<div class="text-slate-400">[08:24:15] LOG_INFO: Lubrication pressure stable at 4.2 bar</div>
+<div class="text-yellow-500 bg-yellow-500/10 p-1 rounded">[08:24:18] ALERT: Bearing temperature oscillation detected (+/- 4C)</div>
+<div class="text-red-500 font-bold bg-red-500/10 p-1 rounded">[08:24:22] CRITICAL: Vibration threshold exceeded ISO 10816 Zone C</div>
+<div class="text-slate-400">[08:24:25] LOG_INFO: Triggering Sentinel AI Diagnostic Routine...</div>
+<div class="text-primary">[08:24:26] SENTINEL_AI: Local LLM (Llama-3-70B) processing context...</div>
+<div class="text-slate-400">[08:24:28] RAG_ENGINE: Searching ISO-10816 and SKF-Bearing-Manual-2023...</div>
+<div class="text-slate-400">[08:24:30] LOG_INFO: Telemetry snapshot stored in session_cache_094</div>
+<div class="text-slate-500">[08:24:32] DATA_RECEIVED: RPM=3600, TEMP=843C, VIB=12.6mm/s</div>
+<div class="text-slate-500">[08:24:35] DATA_RECEIVED: RPM=3601, TEMP=844C, VIB=12.9mm/s</div>
+<div class="text-slate-500">[08:24:38] DATA_RECEIVED: RPM=3599, TEMP=844C, VIB=13.1mm/s</div>
+<div class="text-red-500">[08:24:40] ALERT: Peak vibration amplitude 13.4mm/s</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col bg-white dark:bg-card-dark relative">
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<div class="flex items-start justify-between mb-8">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-xl shadow-primary/30">
+<span class="material-symbols-rounded text-2xl">auto_awesome</span>
+</div>
+<div>
+<h2 class="text-2xl font-bold">Sentinel AI Diagnosis</h2>
+<p class="text-slate-500 dark:text-slate-400">Confidence Score: <span class="text-green-500 font-bold">94.2%</span></p>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800 p-1 rounded-full flex items-center gap-1">
+<span class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500">RAG SOURCES</span>
+<button class="px-3 py-1 rounded-full text-xs font-semibold bg-white dark:bg-slate-700 shadow-sm text-primary">SKF-M-2023</button>
+<button class="px-3 py-1 rounded-full text-xs font-semibold text-slate-500">ISO-10816</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6 mb-8">
+<div class="p-6 rounded-3xl bg-primary/5 border border-primary/10">
+<h3 class="text-xs font-bold text-primary uppercase tracking-widest mb-4">Primary Root Cause</h3>
+<p class="text-lg font-semibold leading-relaxed">Bearing #4 inner race flaking due to insufficient lubrication viscosity at peak operating temperatures.</p>
+</div>
+<div class="p-6 rounded-3xl bg-secondary/10 border border-secondary/20">
+<h3 class="text-xs font-bold text-secondary uppercase tracking-widest mb-4">Urgency Assessment</h3>
+<p class="text-lg font-semibold leading-relaxed">Critical: Potential for catastrophic shaft misalignment within <span class="underline decoration-secondary">12-24 hours</span>.</p>
+</div>
+</div>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-rounded text-sm text-slate-500">format_list_bulleted</span>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-lg">Actionable Recommendations</h4>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 text-slate-600 dark:text-slate-300">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                            Immediate reduction of turbine load to 60% capacity.
+                                        </li>
+<li class="flex items-center gap-3 text-slate-600 dark:text-slate-300">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                            Inspect lubricant for metallic particulates (Wear Debris Analysis).
+                                        </li>
+<li class="flex items-center gap-3 text-slate-600 dark:text-slate-300">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                            Check bearing seal integrity on non-drive end.
+                                        </li>
+</ul>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+<div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 text-blue-600 dark:text-blue-400">
+<span class="material-symbols-rounded text-sm">menu_book</span>
+</div>
+<div class="flex-1">
+<h4 class="text-sm font-bold mb-1">Citing: SKF Rolling Bearing Manual Sec. 7.4</h4>
+<p class="text-xs text-slate-500 leading-relaxed italic">"Vibration signatures exhibiting high-frequency modulation at the Ball Pass Frequency Inner race (BPFI) typically indicate fatigue spalling..."</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800">
+<div class="max-w-3xl mx-auto">
+<div class="mb-4 flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-card-dark text-xs font-medium hover:border-primary transition-colors">Compare with 2022 overhaul logs</button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-card-dark text-xs font-medium hover:border-primary transition-colors">Show vibration spectrogram</button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-card-dark text-xs font-medium hover:border-primary transition-colors">Estimate MTBF</button>
+</div>
+<div class="relative">
+<input class="w-full bg-white dark:bg-card-dark border-none rounded-2xl py-4 px-6 pr-16 shadow-lg shadow-black/5 focus:ring-2 focus:ring-primary focus:outline-none dark:text-white transition-shadow" placeholder="Ask follow-up questions for root cause analysis..." type="text"/>
+<button class="absolute right-3 top-2 bottom-2 aspect-square bg-primary text-white rounded-xl flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-rounded">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="h-10 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark px-6 flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-slate-400">
+<div class="flex gap-4">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span> System Ready</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span> LLM Online</span>
+</div>
+<div>
+            Asset ID: TRB-9402-B-SENTINEL • Session: 4,921
+        </div>
+</footer>
+
+</body></html>

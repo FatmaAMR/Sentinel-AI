@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel | Maintenance History &amp; Trends</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#7C3AED", // Vibrant Purple from screenshot
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#0F172A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E293B",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-gradient {
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.1) 0%, rgba(124, 58, 237, 0) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-200">
+<nav class="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark sticky top-0 z-50">
+<div class="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-icons-round text-white text-xl">insights</span>
+</div>
+<span class="text-xl font-bold tracking-tight">SENTINEL</span>
+</div>
+<div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Fleet Health</a>
+<a class="text-primary border-b-2 border-primary py-5" href="#">History &amp; Trends</a>
+<a class="hover:text-primary transition-colors" href="#">Diagnostics</a>
+<a class="hover:text-primary transition-colors" href="#">Assets</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-round">dark_mode</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+<img alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXAe_0PmUmhzT7M5Q2WUQSySQi_GNmUrE5gjLP4ZsN18zD1jQIR0Cv0e0Cwab1885wqpt5aFelSJtCzUpBt1YHdqrPDL9K4AmBNR92LkJu1PnOdlG8y5c3YWbmqzlLYCWE_g_c5TnDno7bb-xOupT07gZAindobemllsTcZv3q_DbpDoIlxX8CFcQ8eLzTferdxKvu2cjU-YIgmx6nwHIcpSQqT7CyXTuEV25Fi0t1ctHGfzN49-iA5rhCmaYCJljFI9Qcjubbts0"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-[1600px] mx-auto p-6 grid grid-cols-12 gap-6">
+<aside class="col-span-12 lg:col-span-3 space-y-6">
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-semibold text-lg">Filters</h3>
+<button class="text-sm text-primary font-medium">Reset</button>
+</div>
+<div class="space-y-6">
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Date Range</label>
+<select class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary focus:border-primary">
+<option>Last 30 Days</option>
+<option>Last 90 Days</option>
+<option>Last 6 Months</option>
+<option>Custom Range</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Severity</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-red-500 font-medium">Critical</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-amber-500 font-medium">Warning</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-emerald-500 font-medium">Healthy</span>
+</label>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Asset Category</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded-full text-xs font-medium bg-primary text-white">All Assets</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700">Turbines</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700">Conveyors</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700">Motors</button>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 mt-4">
+<span class="material-icons-round text-sm">filter_list</span>
+                        Apply Filters
+                    </button>
+</div>
+</div>
+<div class="bg-gradient-to-br from-primary to-purple-800 p-6 rounded-2xl text-white shadow-xl">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-icons-round text-yellow-300">auto_awesome</span>
+<span class="text-xs font-bold uppercase tracking-widest opacity-90">Sentinel AI Insight</span>
+</div>
+<p class="text-sm leading-relaxed mb-4 opacity-95">
+                    "Vibration peaks in Asset <span class="font-bold underline">#RT-902</span> correlate with a 15% increase in temperature. Recommend inspection of bearing housing within 48 hours."
+                </p>
+<button class="text-xs font-semibold bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition-colors w-full">View Diagnostic Details</button>
+</div>
+</aside>
+<div class="col-span-12 lg:col-span-9 space-y-6">
+<section class="bg-card-light dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm overflow-hidden">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div>
+<h2 class="text-xl font-bold">Trend Visualization</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400">Monitoring RMS Velocity (mm/s) across critical nodes</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex bg-slate-100 dark:bg-slate-900 rounded-lg p-1">
+<button class="px-3 py-1.5 text-xs font-medium bg-white dark:bg-slate-800 rounded shadow-sm">Vibration</button>
+<button class="px-3 py-1.5 text-xs font-medium text-slate-500 hover:text-slate-700">Thermal</button>
+<button class="px-3 py-1.5 text-xs font-medium text-slate-500 hover:text-slate-700">Acoustic</button>
+</div>
+<button class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-icons-round text-lg">download</span>
+</button>
+</div>
+</div>
+<div class="relative h-[300px] w-full mt-4 chart-gradient border-b border-l border-slate-200 dark:border-slate-700 flex items-end">
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-10">
+<div class="border-t border-slate-500 w-full"></div>
+<div class="border-t border-slate-500 w-full"></div>
+<div class="border-t border-slate-500 w-full"></div>
+<div class="border-t border-slate-500 w-full"></div>
+</div>
+<svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 300">
+<path d="M0,250 L100,240 L200,260 L300,180 L400,200 L500,120 L600,140 L700,80 L800,100 L900,40 L1000,60" fill="none" stroke="#7C3AED" stroke-linecap="round" stroke-width="3"></path>
+<path d="M0,280 L100,270 L200,275 L300,260 L400,265 L500,250 L600,255 L700,240 L800,245 L900,230 L1000,235" fill="none" stroke="#94A3B8" stroke-dasharray="8,4" stroke-width="2"></path>
+<circle class="animate-pulse" cx="900" cy="40" fill="#7C3AED" r="6"></circle>
+<line stroke="#7C3AED" stroke-dasharray="4,4" stroke-width="1" x1="900" x2="900" y1="40" y2="300"></line>
+</svg>
+<div class="absolute left-[88%] top-1 -translate-x-1/2 bg-slate-900 text-white text-[10px] p-2 rounded shadow-xl z-10 hidden md:block">
+<p class="font-bold border-b border-white/20 mb-1 pb-1">Oct 24, 14:30</p>
+<p>RMS: 12.4 mm/s</p>
+<p class="text-red-400">Deviation: +18%</p>
+</div>
+</div>
+<div class="flex justify-between text-[10px] font-medium text-slate-400 mt-3 px-2">
+<span>Oct 01</span>
+<span>Oct 08</span>
+<span>Oct 15</span>
+<span>Oct 22</span>
+<span>Oct 29</span>
+</div>
+</section>
+<section class="bg-card-light dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<div>
+<h2 class="text-xl font-bold">Historical Timeline</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400">Detailed logs of all maintenance actions and diagnoses</p>
+</div>
+<div class="relative w-64">
+<span class="material-icons-round absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary focus:border-primary" placeholder="Search logs..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 font-semibold border-b border-slate-100 dark:border-slate-800">
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4">Asset ID</th>
+<th class="px-6 py-4">Diagnosis</th>
+<th class="px-6 py-4">Severity</th>
+<th class="px-6 py-4">Action Taken</th>
+<th class="px-6 py-4 text-right">Details</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Oct 24, 2023</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">RT-902</td>
+<td class="px-6 py-4">Bearing Misalignment</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Critical
+                                    </span>
+</td>
+<td class="px-6 py-4">Scheduled Refurbishment</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-icons-round text-lg">open_in_new</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Oct 21, 2023</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">MOT-044</td>
+<td class="px-6 py-4">Voltage Fluctuations</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Warning
+                                    </span>
+</td>
+<td class="px-6 py-4">Sensor Re-calibration</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-icons-round text-lg">open_in_new</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Oct 19, 2023</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">CONV-21</td>
+<td class="px-6 py-4">Normal Operation</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Healthy
+                                    </span>
+</td>
+<td class="px-6 py-4">Routine Lubrication</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-icons-round text-lg">open_in_new</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Oct 15, 2023</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">RT-901</td>
+<td class="px-6 py-4">Imbalance Detected</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Warning
+                                    </span>
+</td>
+<td class="px-6 py-4">Weighted Balancing</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-icons-round text-lg">open_in_new</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<p class="text-xs text-slate-500 dark:text-slate-400">Showing 1 to 10 of 254 entries</p>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30" disabled="">
+<span class="material-icons-round text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary text-white text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold">2</button>
+<button class="w-8 h-8 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold">3</button>
+<button class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-icons-round text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-slate-500 dark:text-slate-400 text-sm font-medium">Avg. MTBF</span>
+<span class="material-icons-round text-primary/40">timer</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold">482 hrs</span>
+<span class="text-emerald-500 text-xs font-bold">+12%</span>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-slate-500 dark:text-slate-400 text-sm font-medium">Downtime Reduction</span>
+<span class="material-icons-round text-primary/40">trending_down</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold">34.2%</span>
+<span class="text-emerald-500 text-xs font-bold">Monthly Goal Met</span>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-slate-500 dark:text-slate-400 text-sm font-medium">Critical Alerts</span>
+<span class="material-icons-round text-red-400/60">error_outline</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold">03</span>
+<span class="text-slate-500 text-xs font-medium">Active now</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark py-4 px-6">
+<div class="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
+<div class="flex items-center gap-6">
+<span class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Local LLM: Online
+                </span>
+<span class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    Fleet Data: Syncing
+                </span>
+</div>
+<p>© 2023 Sentinel Systems. All diagnostics AI-verified.</p>
+</div>
+</footer>
+
+</body></html>
